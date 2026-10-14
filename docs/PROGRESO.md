@@ -282,7 +282,11 @@ sea funcional desde el primer arranque, **sin depender de que alguien haya
 ejecutado antes el notebook**. Esto además hace que el `GET /health` sea
 significativo desde el principio.
 
+<<<<<<< HEAD
 > ⚠️ **Consecuencia importante:** la imagen oficial solo ejecuta
+=======
+> ⚠️ **Consecuencia importante:** el entrypoint solo ejecuta
+>>>>>>> 8b2b0b98cd6283ba28341bb39ba1ed52204fd55a
 > `/docker-entrypoint-initdb.d/` cuando el volumen de datos está **vacío**. Si
 > se modifica `db/init.sql` con un volumen ya existente, el cambio **no se
 > aplica**. Para reaplicarlo hay que borrar el volumen con

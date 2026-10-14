@@ -8,7 +8,7 @@ services:
   db:
     build:
       # Imagen propia que copia db/init.sql dentro de la imagen, siguiendo el
-      # patrón de la asignatura en lugar de montarlo desde el host.
+      # patrón de la asignatura: el esquema inicial viaja con la imagen.
       context: .
       dockerfile: db/Dockerfile
     container_name: smartcampus_db
