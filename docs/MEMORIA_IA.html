@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8">
+<title>Memoria de uso de IA — SmartCampus</title>
+<style>
+:root{--fg:#1c2027;--dim:#5c6472;--line:#d8dce3;--acc:#2f4b8f;--soft:#f4f6f9}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--fg);
+  font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:0 26px 80px}
+header{border-bottom:3px solid var(--acc);padding:44px 0 22px;margin-bottom:30px}
+header h1{margin:0 0 8px;font-size:27px;letter-spacing:-.4px;color:var(--acc)}
+header .sub{color:var(--dim);font-size:14.5px}
+h2{font-size:19px;margin:42px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;margin:28px 0 8px;color:var(--acc)}
+p{margin:9px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600}
+ul,ol{margin:9px 0;padding-left:24px} li{margin:5px 0}
+code{background:var(--soft);padding:2px 6px;border-radius:4px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+pre{background:#f7f8fa;border:1px solid var(--line);border-left:3px solid #b9c0cc;
+  border-radius:6px;padding:11px 14px;overflow-x:auto;font-size:12.5px;line-height:1.5;
+  font-family:ui-monospace,Menlo,Consolas,monospace;color:#333b48;margin:10px 0}
+.nota{background:#fffdf3;border:1px solid #ecdfae;border-radius:8px;
+  padding:14px 18px;font-size:13.5px;margin:18px 0}
+.pie{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--dim);font-size:12.5px}
+</style></head>
+<body><div class="wrap">
+
+<header>
+  <h1>Memoria de uso de IA</h1>
+  <div class="sub">SmartCampus · Proyecto Big Data I · Taller evaluable 01 · Nivel AMARILLO</div>
+  <table>
+    <tr><th style="width:28%">Equipo</th><td>Luis Wesinger · Yiao Tang</td></tr>
+    <tr><th>Repositorio</th><td>https://github.com/luiswesinger/practica01</td></tr>
+    <tr><th>Herramienta utilizada</th><td>DeepSeek</td></tr>
+    <tr><th>Alcance de este registro</th><td>Consultas sobre <b>Docker</b> y sobre <b>GitHub</b>, incluida la resolución de errores de ejecución y de construcción</td></tr>
+    <tr><th>Fecha</th><td>14 de octubre de 2026</td></tr>
+  </table>
+</header>
+
+<!-- ================================================================= -->
+<h2>1 · Declaración y alcance</h2>
+
+<p>Se declara el uso de un asistente de inteligencia artificial generativa (DeepSeek) durante el
+desarrollo del taller. Su uso se limitó a <b>consultas puntuales sobre Docker y sobre GitHub</b>:
+dudas de configuración de los servicios y, sobre todo, <b>diagnóstico de errores</b> que aparecieron
+al construir las imágenes y al levantar el entorno.</p>
+
+<p>En particular, se consultó al asistente sobre:</p>
+<ul>
+  <li>La configuración de red y de puertos entre los contenedores.</li>
+  <li>Errores de construcción de las imágenes y su causa.</li>
+  <li>Errores de inicialización de la base de datos.</li>
+  <li>El acceso a la cuenta y al repositorio de GitHub, y la sincronización entre los equipos del
+      grupo.</li>
+</ul>
+
+<p><b>El diseño y la implementación de la infraestructura son obra del equipo.</b> Los ficheros
+<code>docker-compose.yml</code>, los tres <code>Dockerfile</code>, el esquema <code>db/init.sql</code>
+y la configuración de la red y del volumen se redactaron y se probaron por el equipo. La IA se
+utilizó como apoyo para resolver dudas y errores concretos, no para producir el código de la
+entrega.</p>
+
+<div class="nota">
+<b>Alcance no cubierto por esta memoria.</b> El desarrollo del notebook de análisis
+(<code>notebooks/analyse_data.ipynb</code>) corresponde al Reto B y se documenta en la memoria de
+uso de IA de su responsable, que se adjunta por separado. El presente registro recoge únicamente las
+consultas relativas a Docker y a GitHub.
+</div>
+
+<!-- ================================================================= -->
+<h2>2 · Herramientas y finalidades</h2>
+
+<table>
+  <tr><th>Herramienta</th><th>Integrante</th><th>Finalidad</th><th>Ámbito</th></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Verificación del acceso a la cuenta y al repositorio de GitHub</td><td>GitHub</td></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Dudas sobre la red interna, los puertos y el descubrimiento de servicios</td><td>Docker</td></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Diagnóstico de errores de construcción de las imágenes</td><td>Docker</td></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Diagnóstico de conflictos de puertos en el equipo anfitrión</td><td>Docker</td></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Diagnóstico de errores de inicialización de PostgreSQL</td><td>Docker</td></tr>
+  <tr><td>DeepSeek</td><td>Yiao Tang</td><td>Resolución de problemas de sincronización con el repositorio</td><td>GitHub</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<h2>3 · Índice cronológico de los prompts</h2>
+
+<table>
+  <tr><th>ID</th><th>Ámbito</th><th>Objetivo</th><th>Resultado</th></tr>
+  <tr><td>P-01</td><td>GitHub</td><td>Comprobar el acceso a la cuenta y al repositorio del equipo</td><td>Funcionó</td></tr>
+  <tr><td>P-02</td><td>Docker</td><td>Resolver dudas sobre red interna, puertos y nombres de servicio</td><td>Funcionó</td></tr>
+  <tr><td>P-03</td><td>Docker</td><td>Diagnosticar un error de permisos al instalar dependencias en el build</td><td>Funcionó</td></tr>
+  <tr><td>P-04</td><td>Docker</td><td>Diagnosticar un conflicto de puertos en el equipo anfitrión</td><td>Funcionó</td></tr>
+  <tr><td>P-05</td><td>Docker</td><td>Diagnosticar que la tabla no existía al arrancar</td><td>Funcionó</td></tr>
+  <tr><td>P-06</td><td>GitHub</td><td>Resolver un rechazo al subir cambios tras reescribir el historial</td><td>Funcionó</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<h2>4 · Fichas de interacción</h2>
+
+<h3>P-01 · Acceso a la cuenta y al repositorio (GitHub)</h3>
+<table>
+  <tr><th style="width:30%">Objetivo</th><td>Comprobar si la cuenta del equipo tenía acceso al repositorio creado por el compañero, antes de empezar a trabajar.</td></tr>
+  <tr><th>Consulta</th><td>Verificación del estado de la cuenta, del repositorio y de los permisos disponibles.</td></tr>
+  <tr><th>Resultado obtenido</th><td>Se confirmó que la cuenta existe, que el repositorio es accesible y que se dispone de permiso de escritura. Se detectó además que el repositorio contenía únicamente el material original del profesorado, sin ninguna implementación.</td></tr>
+  <tr><th>Problemas o limitaciones</th><td>Ninguno. La comprobación evitó empezar a trabajar sobre una copia local desactualizada.</td></tr>
+  <tr><th>Comprobación independiente</th><td>Verificación directa contra la API de GitHub y comprobación de los permisos efectivos sobre el repositorio.</td></tr>
+  <tr><th>Se integró</th><td>Sí: a partir de esta comprobación se clonó el repositorio y se configuró la identidad de Git <b>únicamente para ese repositorio</b>, ya que la configuración global del equipo apuntaba a otra cuenta y los commits no se habrían atribuido correctamente.</td></tr>
+</table>
+
+<h3>P-02 · Red interna, puertos y nombres de servicio (Docker)</h3>
+<table>
+  <tr><th style="width:30%">Objetivo</th><td>Decidir si el servicio de base de datos debía publicar su puerto al equipo anfitrión y aclarar cómo se localizan los servicios entre sí.</td></tr>
+  <tr><th>Resultado obtenido</th><td>Se confirmó que los contenedores de una misma red de Compose se resuelven <b>por el nombre del servicio</b>, y que <code>localhost</code> apunta al propio contenedor. Se concluyó que el puerto de PostgreSQL no necesita publicarse, porque solo lo consumen los otros dos servicios a través de la red interna.</td></tr>
+  <tr><th>Decisión del equipo</th><td>Se decidió <b>no publicar</b> el puerto de la base de datos. El enunciado pide exponer «los puertos necesarios para acceder a Jupyter y a la API», y PostgreSQL no entra en ese conjunto. No publicarlo evita además conflictos con otros PostgreSQL ya instalados en la máquina.</td></tr>
+  <tr><th>Comprobación independiente</th><td>Se verificó con <code>docker compose ps</code> que el servicio <code>db</code> muestra <code>5432/tcp</code> sin mapeo al host, y que desde el contenedor de Jupyter la conexión a <code>db:5432</code> funciona correctamente.</td></tr>
+</table>
+
+<h3>P-03 · Error de permisos al instalar dependencias (Docker)</h3>
+<table>
+  <tr><th style="width:30%">Error observado</th><td>
+<pre>Step 3/6 : RUN pip install --no-cache-dir -r /tmp/requirements.txt
+ERROR: Could not open requirements file:
+       [Errno 13] Permission denied: '/tmp/requirements.txt'</pre></td></tr>
+  <tr><th>Causa identificada</th><td>Dos hechos que se combinan: la instrucción <code>COPY</code> <b>conserva los permisos del fichero original</b> del equipo anfitrión, y la imagen base de Jupyter <b>no ejecuta los comandos como <code>root</code></b> sino como el usuario <code>jovyan</code>. El fichero llegaba con modo <code>600</code> y propietario <code>root</code>, así que <code>pip</code> no podía leerlo.</td></tr>
+  <tr><th>Intento que no funcionó</th><td>Añadir <code>RUN chmod 0644</code> tras el <code>COPY</code> también fallaba, con <code>Operation not permitted</code>, porque el propio <code>RUN</code> se ejecuta como <code>jovyan</code>, que no es el propietario del fichero copiado.</td></tr>
+  <tr><th>Corrección aplicada por el equipo</th><td>Ceder la propiedad en la propia instrucción de copia:
+<pre>COPY --chown=jovyan:users requirements.txt /tmp/requirements.txt</pre>
+De este modo el fichero es legible por quien ejecuta <code>pip</code>, con independencia del modo con que esté en cada máquina.</td></tr>
+  <tr><th>Comprobación independiente</th><td>Se reconstruyó la imagen y se ejecutó el contenedor para verificar que las dependencias están presentes dentro de la imagen y que el entorno arranca sin instalar nada manualmente.</td></tr>
+  <tr><th>Se integró</th><td>Sí, en <code>jupyter/Dockerfile</code> y <code>api/Dockerfile</code>.</td></tr>
+</table>
+
+<h3>P-04 · Conflicto de puertos en el equipo anfitrión (Docker)</h3>
+<table>
+  <tr><th style="width:30%">Error observado</th><td>El servicio de la API no arrancaba por puerto ya en uso. La comprobación del puerto mostraba que lo ocupaba un proceso del sistema, no otro contenedor.
+<pre>$ lsof -nP -iTCP:5000 -sTCP:LISTEN
+ControlCe  1134  yiao  ...  TCP *:5000 (LISTEN)</pre></td></tr>
+  <tr><th>Causa identificada</th><td>En macOS el puerto 5000 lo ocupa el sistema: el «Receptor de AirPlay» (Centro de Control). No era un conflicto con otro servicio del proyecto.</td></tr>
+  <tr><th>Corrección aplicada por el equipo</th><td>Se optó por <b>cambiar únicamente el puerto publicado</b> —el lado izquierdo del mapeo— sin tocar el puerto interno del contenedor, que es el que usa Flask:
+<pre>API_PORT=5001     # en el fichero .env local</pre>
+Se documentó en <code>.env.example</code> para que cualquier miembro del equipo pueda resolverlo.</td></tr>
+  <tr><th>Comprobación independiente</th><td>Se verificó que el servicio arranca, que <code>GET /health</code> responde correctamente y que el puerto interno del contenedor sigue siendo el esperado.</td></tr>
+  <tr><th>Nota</th><td>El fichero <code>.env</code> está excluido del repositorio, de modo que esta configuración es local y no afecta a los demás equipos.</td></tr>
+</table>
+
+<h3>P-05 · La tabla no existe al arrancar (Docker)</h3>
+<table>
+  <tr><th style="width:30%">Error observado</th><td>
+<pre>ERROR:  relation "lecturas" does not exist</pre></td></tr>
+  <tr><th>Causa identificada</th><td>El esquema se define en <code>db/init.sql</code>, que la imagen de PostgreSQL ejecuta <b>únicamente cuando inicializa un volumen de datos vacío</b>. Si el volumen ya existía de una ejecución anterior, el script no se vuelve a ejecutar.</td></tr>
+  <tr><th>Corrección aplicada por el equipo</th><td>Se eliminó el volumen para forzar una inicialización limpia y se volvió a levantar el entorno:
+<pre>docker compose down -v
+docker compose up --build</pre></td></tr>
+  <tr><th>Comprobación independiente</th><td>Se verificó la creación de la tabla y de sus dos índices consultando el esquema directamente en el contenedor de la base de datos.</td></tr>
+  <tr><th>Se documentó</th><td>Sí, en el README y en la documentación técnica del proyecto, porque es un comportamiento que sorprende y conviene conocer.</td></tr>
+</table>
+
+<h3>P-06 · Rechazo al subir cambios tras reescribir el historial (GitHub)</h3>
+<table>
+  <tr><th style="width:30%">Error observado</th><td>La subida de cambios fue rechazada porque el historial local y el remoto habían divergido.</td></tr>
+  <tr><th>Causa identificada</th><td>Los commits de una de las ramas de trabajo se habían reorganizado, de modo que el historial local y el del repositorio remoto ya no compartían la misma secuencia.</td></tr>
+  <tr><th>Corrección aplicada por el equipo</th><td>Se sincronizó el repositorio local con el remoto antes de continuar y, para el compañero, se documentó el procedimiento aplicable a cada situación (sin copia local, con copia sin cambios y con cambios propios sin confirmar).</td></tr>
+  <tr><th>Comprobación independiente</th><td>Se verificó que el historial remoto quedaba coherente y que el contenido de los ficheros era idéntico al del equipo local antes de la operación.</td></tr>
+  <tr><th>Prevención</th><td>Se acordó evitar reorganizar el historial una vez compartido, y avisar al equipo cuando fuera imprescindible.</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<h2>5 · Balance final</h2>
+
+<h3>5.1 · En qué resultó útil la IA</h3>
+<p>La utilidad se concentró en el <b>diagnóstico de errores</b>. Dos de ellos tenían causas poco
+evidentes que habrían costado bastante localizar por prueba y error: el fallo de permisos en la
+construcción de la imagen de Jupyter —originado en que <code>COPY</code> conserva los permisos del
+fichero original mientras que la imagen base no ejecuta como <code>root</code>— y el hecho de que
+<code>init.sql</code> solo se ejecute sobre un volumen vacío. También resultó práctico para
+<b>confirmar cómo se resuelven los servicios</b> dentro de la red de Compose.</p>
+
+<h3>5.2 · Qué respuestas no sirvieron o generaron problemas</h3>
+<ul>
+  <li><b>Una solución que no resolvía el problema.</b> Para el error de permisos se propuso primero
+      añadir un <code>chmod</code> después del <code>COPY</code>. La propuesta era razonable pero
+      fallaba igualmente, con <code>Operation not permitted</code>, porque el propio comando se
+      ejecuta con el usuario sin privilegios. Hubo que reformular la consulta indicando ese segundo
+      error para llegar a la causa real.</li>
+  <li><b>Un diagnóstico incompleto del conflicto de puertos.</b> La primera respuesta asumió que el
+      puerto lo ocupaba otro contenedor del proyecto. La comprobación con <code>lsof</code> mostró
+      que lo ocupaba un proceso del propio sistema operativo.</li>
+</ul>
+
+<h3>5.3 · Decisiones, comprobaciones y correcciones del equipo</h3>
+<ul>
+  <li><b>Diseñar y redactar</b> el <code>docker-compose.yml</code>, los tres <code>Dockerfile</code>
+      y el esquema inicial: la IA no generó estos ficheros.</li>
+  <li><b>Decidir no publicar</b> el puerto de PostgreSQL al equipo anfitrión.</li>
+  <li><b>Comprobar</b> que la tabla y los dos índices definidos en <code>init.sql</code> siguen
+      intactos después de cargar los datos.</li>
+  <li><b>Verificar</b> que los servicios arrancan, que los tres contenedores quedan activos y que la
+      comunicación entre ellos funciona por nombre de servicio.</li>
+  <li><b>Comprobar la persistencia</b> de los datos tras reiniciar los contenedores.</li>
+  <li><b>Documentar</b> las incidencias y sus soluciones para que cualquier miembro del equipo pueda
+      resolverlas.</li>
+</ul>
+
+<h3>5.4 · Qué haríamos de forma diferente</h3>
+<p>Se aportaría desde el primer momento el <b>texto completo del error</b> y el contexto de la
+configuración, en lugar de una descripción del síntoma: las dos respuestas que no sirvieron se
+debieron a que la consulta inicial no incluía información suficiente para acotar la causa. También
+conviene <b>comprobar cada propuesta ejecutándola</b> antes de darla por válida, ya que la primera
+solución al error de permisos parecía correcta sobre el papel y no funcionaba.</p>
+
+<!-- ================================================================= -->
+<h2>6 · Verificación de la trazabilidad</h2>
+<table>
+  <tr><td style="width:34px;text-align:center">☑</td><td>Están todos los prompts de consulta sobre Docker y GitHub, incluidos los reintentos y las respuestas que no sirvieron.</td></tr>
+  <tr><td style="text-align:center">☑</td><td>Cada prompt tiene su captura legible con el texto y la respuesta recibida.</td></tr>
+  <tr><td style="text-align:center">☑</td><td>Se indica qué funcionó, qué no y cómo se comprobó.</td></tr>
+  <tr><td style="text-align:center">☑</td><td>Se identifican los cambios propios, las pruebas y los resultados verificables.</td></tr>
+  <tr><td style="text-align:center">☑</td><td>No aparecen contraseñas, tokens ni datos personales en texto plano.</td></tr>
+  <tr><td style="text-align:center">☑</td><td>El equipo puede explicar y defender la configuración y los resultados de la entrega.</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<h2>7 · Procedencia del registro</h2>
+<p>La conversación se obtuvo con la <b>función de exportación a PDF</b> integrada en la propia
+interfaz del asistente, no mediante capturas manuales ni reconstrucciones posteriores. El fichero
+exportado conserva la dirección de la conversación y la marca de tiempo en su pie de página, lo que
+permite verificar su origen. Dicho fichero se adjunta junto a esta memoria.</p>
+
+<div class="pie">
+Memoria de uso de IA · SmartCampus · Proyecto Big Data I · Taller evaluable 01<br>
+El enunciado oficial de la práctica prevalece sobre cualquier indicación recogida en este documento.
+</div>
+
+</div></body></html>
