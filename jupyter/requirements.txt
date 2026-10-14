@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Dependencias del contenedor de Jupyter
+#
+# El taller exige que este contenedor arranque ya preparado, sin tener que
+# ejecutar 'pip install' a mano después de levantarlo.
+# ---------------------------------------------------------------------------
+
+# Tratamiento de datos
+pandas>=2.2,<3
+numpy>=1.26,<3
+
+# Capa de acceso a datos: el mismo código sirve para PostgreSQL y SQLite
+SQLAlchemy>=2.0,<3
+
+# Driver de PostgreSQL para SQLAlchemy (formato binario: no requiere compilar)
+psycopg2-binary>=2.9,<3
+
+# Cliente HTTP para la prueba de integración de extremo a extremo (reto D):
+# el notebook envía el POST /lecturas con requests.
+requests>=2.32,<3
