@@ -1,0 +1,10 @@
+# Archivos que NO deben viajar al contexto de build de la API
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.venv/
+venv/

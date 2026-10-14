@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Contexto de build de la imagen de Jupyter (la raíz del repositorio).
+#
+# El contexto es la raíz porque el Dockerfile necesita copiar 'datos/'.
+# Excluir todo lo demás evita enviar al daemon ficheros que no se usan y
+# mantiene el build rápido y predecible.
+# ---------------------------------------------------------------------------
+
+# Control de versiones y metadatos del editor
+.git/
+.gitignore
+.github/
+
+# El enunciado y las plantillas no forman parte de la imagen
+01_Enunciado/
+03_Plantillas/
+04_Ejemplos_pruebas/
+00_LEEME_PRIMERO.md
+LICENSE
+
+# El CSV original del kit: el Dockerfile usa 'datos/', no '02_Datos/'
+02_Datos/
+
+# Documentación y evidencias
+docs/
+evidencias/
+
+# Entorno de desarrollo local
+.docker-build/
+.env
+
+# Ficheros auxiliares del sistema
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/

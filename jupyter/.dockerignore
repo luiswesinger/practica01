@@ -1,0 +1,8 @@
+# Archivos que NO deben viajar al contexto de build de Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.ipynb
+.DS_Store
+Thumbs.db
+*.log

@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- SmartCampus: añadidos del proyecto --------------------------------
+# Directorio local de trabajo del builder de Docker (no forma parte
+# del proyecto; se crea solo en algunas máquinas).
+.docker-build/
+
+# Ficheros de base de datos locales generados por el notebook (SQLite)
+*.db
+*.sqlite
+*.sqlite3

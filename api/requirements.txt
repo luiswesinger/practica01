@@ -1,0 +1,9 @@
+# ---------------------------------------------------------------------------
+# Dependencias de la API Flask
+# ---------------------------------------------------------------------------
+
+# Framework de la API REST
+Flask>=3.0,<4
+
+# Driver de PostgreSQL en formato binario (no requiere compilar)
+psycopg2-binary>=2.9,<3

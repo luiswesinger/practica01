@@ -1,0 +1,123 @@
+services:
+
+  # ---------------------------------------------------------------------------
+  # Servicio 1 · PostgreSQL
+  # Almacena las lecturas ambientales. NO publica puerto al host: solo lo
+  # consumen los servicios 'api' y 'jupyter' dentro de la red de Compose.
+  # ---------------------------------------------------------------------------
+  db:
+    build:
+      # Imagen propia que copia db/init.sql dentro de la imagen, siguiendo el
+      # patrón de la asignatura: el esquema inicial viaja con la imagen.
+      context: .
+      dockerfile: db/Dockerfile
+    container_name: smartcampus_db
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smartcampus}
+      POSTGRES_USER: ${POSTGRES_USER:-smartcampus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-smartcampus_dev}
+
+    volumes:
+      # Datos persistentes: sobreviven a 'down' y a la recreación del contenedor.
+      # El esquema inicial ya viaja DENTRO de la imagen (db/Dockerfile), no aquí.
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - smartcampus_net
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Servicio 2 · API Flask
+  # Expone GET /health, GET /lecturas y POST /lecturas sobre la misma base
+  # PostgreSQL del servicio 'db'.
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      # Mismo criterio que en Jupyter: el contexto es la raíz del repositorio
+      # y las rutas del Dockerfile empiezan por 'api/'.
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: smartcampus_api
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-smartcampus}
+      DB_USER: ${POSTGRES_USER:-smartcampus}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-smartcampus_dev}
+
+    ports:
+      - "${API_PORT:-5000}:5000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    networks:
+      - smartcampus_net
+
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Servicio 3 · Jupyter
+  # Notebook de análisis: lee el CSV, carga en PostgreSQL y SQLite, analiza y
+  # ejecuta la prueba de integración de extremo a extremo contra la API.
+  #
+  # El CSV viaja DENTRO de la imagen (instrucción COPY del Dockerfile) y los
+  # notebooks se montan desde el host para poder editarlos sin reconstruir.
+  # ---------------------------------------------------------------------------
+  jupyter:
+    build:
+      # El contexto es la RAÍZ del repositorio, no ./jupyter, porque el
+      # Dockerfile copia 'datos/' (el CSV), que vive fuera de esa carpeta.
+      # El .dockerignore de la raíz mantiene el contexto pequeño.
+      context: .
+      dockerfile: jupyter/Dockerfile
+    container_name: smartcampus_jupyter
+
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+
+    volumes:
+      - ./notebooks:/home/jovyan/work
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    networks:
+      - smartcampus_net
+
+    command: >-
+      start-notebook.py
+      --ServerApp.token=''
+      --ServerApp.password=''
+      --ServerApp.ip='0.0.0.0'
+      --ServerApp.port=8888
+      --ServerApp.allow_origin='*'
+      --ServerApp.root_dir=/home/jovyan/work
+      --ServerApp.open_browser=False
+
+    restart: unless-stopped
+
+
+# Red interna propia: permite resolver los servicios por su nombre
+# ('db', 'api', 'jupyter') en lugar de usar direcciones IP.
+networks:
+  smartcampus_net:
+    driver: bridge
+
+
+# Volumen con nombre: los datos de PostgreSQL sobreviven a
+# 'docker compose down' y a la recreación de los contenedores.
+volumes:
+  postgres_data:
