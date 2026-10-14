@@ -70,11 +70,7 @@ EXPOSE 8888
 | `COPY` de `requirements.txt` | A `./requirements.txt` | A `/tmp/requirements.txt` | 🟡 Misma instrucción, distinto destino. Se copia a `/tmp` para que el fichero **no acabe dentro del espacio de trabajo montado** desde el host y no aparezca como ruido en Jupyter |
 | `RUN pip install --no-cache-dir -r …` | Presente | Presente | ✅ Idéntico, incluido `--no-cache-dir` |
 | `COPY --chown=jovyan:users` | Presente | Presente | ✅ Se respeta la cesión de propiedad, que además evita un fallo real de build (véase el apartado 6.1) |
-<<<<<<< HEAD
 | `COPY` de los datos | `datos/` → `./datos/` | `datos` → `/home/jovyan/datos` | 🟡 Misma idea. Se copia **fuera** de `/home/jovyan/work` a propósito: así los datos vienen siempre de la imagen y no del bind mount |
-=======
-| `COPY` de los datos | `datos/` → `./datos/` | `datos` → `/home/jovyan/datos` | 🟡 Misma idea. Se copia **fuera** de `/home/jovyan/work` a propósito: así los datos provienen siempre de la imagen y no del directorio de notebooks montado desde el host |
->>>>>>> 8b2b0b98cd6283ba28341bb39ba1ed52204fd55a
 | `EXPOSE 8888` | Presente | Presente | ✅ Idéntico |
 | `RUN python train_model.py` | Presente (entrenaba un modelo en el build) | **No aplica** | ⚪ Ese ejemplo pertenecía al taller de Dockerfile, que generaba un artefacto de Machine Learning durante el build. SmartCampus no requiere ningún modelo |
 
@@ -106,21 +102,12 @@ EXPOSE 5432
 | `RUN chmod +x` | Presente | **No necesario** | ⚪ El ejemplo lo usaba porque copiaba un script **de shell** que debía ser ejecutable. Aquí se copia un `.sql`, que PostgreSQL lee, no ejecuta |
 | `EXPOSE 5432` | Presente | Presente | ✅ Idéntico |
 
-<<<<<<< HEAD
-> **Cambio aplicado.** La primera versión de este proyecto montaba `db/init.sql`
-> con un bind mount desde `docker-compose.yml`, en lugar de copiarlo en una
-> imagen propia. El enunciado lo permitía (*«los Dockerfile o archivos de
-> configuración necesarios»*), pero se ha alineado con el ejemplo de clase para
-> que no haya duda: **el esquema inicial forma parte de la imagen** y no depende
-> de que exista una ruta concreta en el equipo de cada compañero.
-=======
 **El esquema inicial viaja con la imagen.** El enunciado admite *«los Dockerfile
 o archivos de configuración necesarios»*; al copiar `db/init.sql` en una imagen
 propia, el esquema **forma parte de la imagen** y no depende de que exista una
 ruta concreta en el equipo de cada compañero. La imagen queda autocontenida: se
 puede reconstruir en cualquier máquina y, si se publicara en un registro, quien
 la descargue obtiene exactamente el mismo esquema.
->>>>>>> 8b2b0b98cd6283ba28341bb39ba1ed52204fd55a
 
 ### 2.3 Dockerfile de la API
 
