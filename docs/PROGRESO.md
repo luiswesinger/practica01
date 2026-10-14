@@ -33,7 +33,7 @@ docker compose up --build
 
 | Servicio | Imagen | Contenedor | Puerto en el host | Publica |
 |---|---|---|---|---|
-| `db` | `postgres:16-alpine` | `smartcampus_db` | — | ❌ No |
+| `db` | Propia (`postgres:16-alpine`) | `smartcampus_db` | — | ❌ No |
 | `api` | Propia (`python:3.13-slim`) | `smartcampus_api` | `5000` | ✅ Sí |
 | `jupyter` | Propia (`quay.io/jupyter/minimal-notebook`) | `smartcampus_jupyter` | `8888` | ✅ Sí |
 
@@ -41,9 +41,12 @@ docker compose up --build
 
 **`db` — PostgreSQL 16**
 
-- Crea el esquema inicial mediante `db/init.sql`, que se monta en
-  `/docker-entrypoint-initdb.d/`. La imagen oficial ejecuta ese directorio
-  **solo cuando inicializa un volumen vacío**, es decir, la primera vez.
+- Imagen propia (`db/Dockerfile`) que **copia** `db/init.sql` a
+  `/docker-entrypoint-initdb.d/`, siguiendo el patrón de la asignatura: el
+  esquema inicial forma parte de la imagen y no depende de una ruta del host.
+- Esa carpeta solo se ejecuta **cuando el contenedor inicializa un volumen
+  vacío**, es decir, la primera vez. `COPY` solo copia el fichero durante el
+  build: la ejecución del SQL ocurre en el runtime.
 - La tabla `lecturas` incluye los cinco campos del CSV más un `id` autoincremental,
   y dos índices de apoyo (`edificio` y `fecha_hora`).
 - Los datos se guardan en el volumen con nombre `postgres_data`, por lo que
@@ -112,12 +115,20 @@ practica01/
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── db/
+│   ├── Dockerfile              ← copia init.sql dentro de la imagen
 │   └── init.sql                ← esquema inicial de 'lecturas'
 ├── datos/
 │   └── sensores.csv            ← el CSV que se copia en la imagen
+├── docs/
+│   ├── PROGRESO.md             ← este documento
+│   └── PROCESO_DE_COMPILACION.md ← cómo se construyen las imágenes y por qué
 ├── notebooks/                  ← (vacío; lo llenará el Reto B)
 └── evidencias/                 ← (vacío; capturas de la entrega)
 ```
+
+> 📄 El detalle del proceso de build —correspondencia con los ejemplos de la
+> asignatura, caché de capas, orden de arranque e incidencias— está en
+> **[`docs/PROCESO_DE_COMPILACION.md`](PROCESO_DE_COMPILACION.md)**.
 
 ---
 

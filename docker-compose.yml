@@ -6,7 +6,11 @@ services:
   # consumen los servicios 'api' y 'jupyter' dentro de la red de Compose.
   # ---------------------------------------------------------------------------
   db:
-    image: postgres:16-alpine
+    build:
+      # Imagen propia que copia db/init.sql dentro de la imagen, siguiendo el
+      # patrón de la asignatura en lugar de montarlo desde el host.
+      context: .
+      dockerfile: db/Dockerfile
     container_name: smartcampus_db
 
     environment:
@@ -16,10 +20,8 @@ services:
 
     volumes:
       # Datos persistentes: sobreviven a 'down' y a la recreación del contenedor.
+      # El esquema inicial ya viaja DENTRO de la imagen (db/Dockerfile), no aquí.
       - postgres_data:/var/lib/postgresql/data
-      # Esquema inicial. La imagen oficial de PostgreSQL solo ejecuta los
-      # scripts de este directorio cuando inicializa un volumen VACÍO.
-      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
 
     networks:
       - smartcampus_net
