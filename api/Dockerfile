@@ -34,4 +34,12 @@ EXPOSE 5000
 # funcional, no un despliegue de producción.
 # host=0.0.0.0 es obligatorio para que el puerto sea alcanzable desde fuera
 # del contenedor; con 127.0.0.1 solo respondería dentro del propio contenedor.
-CMD ["flask", "--app", "app", "run", "--host=0.0.0.0", "--port=5000"]
+#
+# --with-threads es necesario: sin él el servidor de desarrollo atiende una
+# petición cada vez. GET /health consulta la base de datos, así que si
+# PostgreSQL tarda o no responde, esa petición bloquea al único worker y TODAS
+# las demás quedan en cola hasta agotar su tiempo de espera. Con hilos, el
+# servicio sigue atendiendo el resto de peticiones mientras una está esperando
+# a la base de datos. (En Flask 3 es el valor por defecto, pero se declara de
+# forma explícita para que no dependa de la versión instalada.)
+CMD ["flask", "--app", "app", "run", "--host=0.0.0.0", "--port=5000", "--with-threads"]

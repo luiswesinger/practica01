@@ -179,4 +179,6 @@ def crear_lectura():
 
 if __name__ == "__main__":
     # host=0.0.0.0 es imprescindible dentro de un contenedor.
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # threaded=True evita que una petición lenta a la base de datos bloquee al
+    # resto (el servidor de desarrollo de Flask es monohilo por defecto).
+    app.run(host="0.0.0.0", port=5000, debug=True, threaded=True)
