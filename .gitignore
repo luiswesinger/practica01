@@ -228,3 +228,8 @@ __marimo__/
 *.db
 *.sqlite
 *.sqlite3
+
+# --- SmartCampus: ficheros auxiliares del sistema -----------------------
+.DS_Store
+._*
+Thumbs.db

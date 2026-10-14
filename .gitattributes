@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# Normalización de finales de línea
+#
+# MOTIVO: el proyecto se ejecuta dentro de contenedores Linux. Si un fichero
+# de texto viaja al contenedor con finales de línea CRLF (Windows), hay dos
+# consecuencias reales:
+#
+#   1. Un script de shell con shebang '#!/bin/sh\r' NO se puede ejecutar:
+#      el kernel busca el intérprete literal '/bin/sh\r'.
+#   2. Valores leídos con $(...) o leídos por un intérprete arrastran el '\r'.
+#
+# Las reglas de abajo fijan LF en el REPOSITORIO y en el working copy de todo
+# el mundo, sin depender de la configuración local de Git de cada persona
+# (core.autocrlf). Así el proyecto se comporta igual en macOS, Linux y
+# Windows/WSL2.
+#
+# Nota: este proyecto NO tiene scripts de shell. Se fijan igualmente para que
+# siga siendo correcto si algún día se añade un entrypoint o un init-db.sh.
+# ---------------------------------------------------------------------------
+
+# Por defecto: detectar texto automáticamente y normalizar a LF en el repo.
+* text=auto
+
+# Texto que se ejecuta o se interpreta DENTRO de Linux: LF obligatorio.
+*.sh    text eol=lf
+*.bash  text eol=lf
+*.sql   text eol=lf
+*.env   text eol=lf
+.env*   text eol=lf
+
+# Ficheros que los contenedores leen tal cual (Dockerfiles, Compose, YAML,
+# requirements, CSV de datos): LF para que el hash del contexto de build sea
+# idéntico en todas las máquinas.
+Dockerfile*     text eol=lf
+*.dockerfile    text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.txt           text eol=lf
+*.csv           text eol=lf
+*.json          text eol=lf
+*.py            text eol=lf
+*.md            text eol=lf
+
+# BINARIOS: se declaran explícitamente para que Git no los toque nunca.
+# (Los notebooks .ipynb son JSON, pero se marcan como binarios para que Git
+# no intente normalizarlos ni mostrarlos como diff de texto.)
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.pdf   binary
+*.docx  binary
+*.db    binary
+*.sqlite binary
+*.ipynb binary
